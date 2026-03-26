@@ -1,0 +1,237 @@
+:root {
+    --bg: #f4efe6;
+    --panel: rgba(255, 252, 247, 0.92);
+    --text: #1a1714;
+    --muted: #6f655d;
+    --line: #dccfc3;
+    --accent: #b54a2e;
+    --accent-dark: #8f3218;
+    --alive: #1f7a4d;
+    --suspended: #ab5a00;
+    --dead: #a12626;
+    --unknown: #5d5f69;
+    --shadow: 0 20px 45px rgba(85, 54, 28, 0.12);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(circle at top left, rgba(181, 74, 46, 0.16), transparent 28%),
+        radial-gradient(circle at right center, rgba(32, 122, 79, 0.14), transparent 24%),
+        linear-gradient(135deg, #f8f3eb 0%, #eee2d4 100%);
+}
+
+.page {
+    width: min(1120px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 36px 0 56px;
+}
+
+.hero {
+    padding: 18px 4px 24px;
+}
+
+.eyebrow {
+    margin: 0 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 12px;
+    color: var(--accent-dark);
+    font-weight: 700;
+}
+
+.hero h1 {
+    margin: 0;
+    font-size: clamp(32px, 5vw, 56px);
+    line-height: 1.02;
+}
+
+.subtitle {
+    max-width: 760px;
+    margin: 14px 0 0;
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.panel {
+    background: var(--panel);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    padding: 22px;
+    margin-top: 18px;
+}
+
+label,
+.result-head h2 {
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+textarea {
+    width: 100%;
+    min-height: 210px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 16px;
+    font: inherit;
+    font-size: 15px;
+    color: var(--text);
+    background: #fffdf9;
+    resize: vertical;
+}
+
+textarea:focus,
+button:focus {
+    outline: 3px solid rgba(181, 74, 46, 0.18);
+    outline-offset: 2px;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 16px;
+}
+
+button {
+    border: 0;
+    border-radius: 999px;
+    padding: 14px 22px;
+    font: inherit;
+    font-weight: 700;
+    color: white;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    cursor: pointer;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+button:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+.status-text {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.stat-card {
+    background: rgba(255, 252, 247, 0.85);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    padding: 18px;
+    box-shadow: var(--shadow);
+}
+
+.stat-card span {
+    display: block;
+    color: var(--muted);
+    margin-bottom: 10px;
+}
+
+.stat-card strong {
+    font-size: 30px;
+}
+
+.stat-card.alive strong,
+.badge.alive {
+    color: var(--alive);
+}
+
+.stat-card.suspended strong,
+.badge.suspended {
+    color: var(--suspended);
+}
+
+.stat-card.dead strong,
+.badge.dead {
+    color: var(--dead);
+}
+
+.stat-card.unknown strong,
+.badge.unknown {
+    color: var(--unknown);
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 14px 12px;
+    border-bottom: 1px solid #e7dbcf;
+    vertical-align: top;
+}
+
+th {
+    color: var(--muted);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    background: rgba(26, 23, 20, 0.06);
+}
+
+.empty-row td {
+    text-align: center;
+    color: var(--muted);
+    padding: 24px 12px;
+}
+
+a {
+    color: var(--accent-dark);
+}
+
+@media (max-width: 820px) {
+    .page {
+        width: min(100% - 20px, 1120px);
+        padding-top: 18px;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
