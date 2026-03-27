@@ -1,18 +1,13 @@
 # Twitter/X Batch Checker
 
-Web app Python dung de kiem tra hang loat username Twitter/X va phan loai:
+Ban nay chi con phan CLI de chay tren CMD/PowerShell.
 
-- `alive`: tai khoan van truy cap duoc
-- `suspended`: tai khoan da bi suspend
-- `dead`: username khong ton tai, da doi ten, hoac trang profile khong con
-- `unknown`: khong du tin hieu de ket luan
+Tool phan loai username Twitter/X thanh:
 
-## Tinh nang
-
-- Nhap nhieu username trong mot o textarea
-- Ho tro tach username theo dong hoac dau phay
-- Kiem tra hang loat va hien thi ket qua bang
-- Su dung `DrissionPage` de dieu khien Chromium nhanh hon cach mo browser moi cho tung username
+- `live`
+- `suspended`
+- `die`
+- `unknown`
 
 ## Cai dat
 
@@ -27,30 +22,12 @@ Lenh cai:
 pip install -r requirements.txt
 ```
 
-## Chay app web
+## Cach chay
 
-```bash
-python app.py
-```
-
-Mo trinh duyet tai:
-
-```text
-http://127.0.0.1:5000
-```
-
-## Chay nhanh tren CMD
-
-Kiem tra bang danh sach username truyen truc tiep:
+Nhap truc tiep username:
 
 ```bash
 python cli_check.py -u jack openai elonmusk
-```
-
-Hoac truyen phan tach boi dau phay:
-
-```bash
-python cli_check.py -u "jack,openai,elonmusk"
 ```
 
 Doc tu file text:
@@ -59,27 +36,20 @@ Doc tu file text:
 python cli_check.py -f usernames.txt
 ```
 
-Tang toc bang nhieu worker song song:
+Doc file tren Desktop:
 
 ```bash
-python cli_check.py -f usernames.txt --workers 5
+python cli_check.py -f "%USERPROFILE%\Desktop\kiemtraX.txt"
 ```
 
 Luu ket qua ra CSV:
 
 ```bash
-python cli_check.py -f usernames.txt -o result.csv
+python cli_check.py -f "%USERPROFILE%\Desktop\kiemtraX.txt" -o result.csv
 ```
 
-Mac dinh script se chay an browser.
 Neu muon mo browser de xem qua trinh:
 
 ```bash
-python cli_check.py -f usernames.txt --show-browser
+python cli_check.py -f "%USERPROFILE%\Desktop\kiemtraX.txt" --show-browser
 ```
-
-## Luu y
-
-- X/Twitter thay doi giao dien kha thuong xuyen, vi vay mot so keyword nhan dien co the can chinh sua trong file `checker.py`.
-- Neu X chan yeu cau hoac bat dang nhap/captcha, mot so ket qua se roi vao `unknown`.
-- De debug de hon, ban co the doi `headless=True` thanh `False` trong `BatchChecker`.

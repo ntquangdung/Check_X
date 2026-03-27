@@ -5,7 +5,7 @@ import csv
 import sys
 from pathlib import Path
 
-from checker import BatchChecker
+from checker import BatchChecker, DIE_STATUS, LIVE_STATUS, SUSPENDED_STATUS, UNKNOWN_STATUS
 
 
 def parse_usernames(raw_values: list[str]) -> list[str]:
@@ -59,10 +59,10 @@ def print_results(results: list[dict]) -> None:
 def print_summary(results: list[dict]) -> None:
     summary = {
         "total": len(results),
-        "live": sum(1 for item in results if item["status"] == "live"),
-        "suspended": sum(1 for item in results if item["status"] == "suspended"),
-        "die": sum(1 for item in results if item["status"] == "die"),
-        "unknown": sum(1 for item in results if item["status"] == "unknown"),
+        "live": sum(1 for item in results if item["status"] == LIVE_STATUS),
+        "suspended": sum(1 for item in results if item["status"] == SUSPENDED_STATUS),
+        "die": sum(1 for item in results if item["status"] == DIE_STATUS),
+        "unknown": sum(1 for item in results if item["status"] == UNKNOWN_STATUS),
     }
     print(
         "Tong: {total} | Live: {live} | Suspend: {suspended} | "

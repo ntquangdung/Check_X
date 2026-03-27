@@ -11,6 +11,22 @@ except ImportError:  # pragma: no cover
     ChromiumOptions = None
 
 
+LIVE_STATUS = "live"
+SUSPENDED_STATUS = "suspended"
+DIE_STATUS = "die"
+UNKNOWN_STATUS = "unknown"
+
+SUSPENDED_TEXT = "Account suspended"
+DIE_TEXTS = [
+    "This account doesn\u2019t exist",
+    "This account doesn't exist",
+    "Page doesn\u2019t exist",
+    "Page doesn't exist",
+    "Try searching for another.",
+    "Try searching for another",
+]
+
+
 @dataclass
 class CheckResult:
     username: str
@@ -79,6 +95,9 @@ return nodes.some(el => {{
         except Exception:  # noqa: BLE001
             return False
 
+    def _has_any_visible_span_text(self, tab, text_values: list[str]) -> bool:
+        return any(self._has_visible_exact_span_text(tab, value) for value in text_values)
+
     def _match_state(self, tab, username: str) -> CheckResult | None:
         url = f"https://x.com/{username}"
         username_text = f"@{username}"
@@ -92,15 +111,13 @@ return nodes.some(el => {{
             return None
 
         if self._has_visible_exact_span_text(tab, username_text):
-            return CheckResult(username, "live", f"Tim thay @{username}.", url)
+            return CheckResult(username, LIVE_STATUS, f"Tim thay @{username}.", url)
 
-        if self._has_visible_exact_span_text(tab, "Account suspended"):
-            return CheckResult(username, "suspended", "Trang xuat hien 'Account suspended'.", url)
+        if self._has_visible_exact_span_text(tab, SUSPENDED_TEXT):
+            return CheckResult(username, SUSPENDED_STATUS, "Trang xuat hien 'Account suspended'.", url)
 
-        if self._has_visible_exact_span_text(tab, "This account doesn’t exist") or self._has_visible_exact_span_text(
-            tab, "This account doesn't exist"
-        ):
-            return CheckResult(username, "die", "Trang xuat hien 'This account doesn't exist'.", url)
+        if self._has_any_visible_span_text(tab, DIE_TEXTS):
+            return CheckResult(username, DIE_STATUS, "Trang xuat hien 'This account doesn't exist'.", url)
 
         return None
 
@@ -149,7 +166,7 @@ return nodes.some(el => {{
                 except Exception as exc:  # noqa: BLE001
                     result = CheckResult(
                         username=username,
-                        status="unknown",
+                        status=UNKNOWN_STATUS,
                         reason=f"Khong the xac nhan 3 dieu kien: {type(exc).__name__}: {exc}",
                         profile_url=url,
                     )
