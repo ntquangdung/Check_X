@@ -5,6 +5,8 @@ import csv
 import sys
 from pathlib import Path
 
+from openpyxl import Workbook
+
 from checker import BatchChecker, DIE_STATUS, LIVE_STATUS, SUSPENDED_STATUS, UNKNOWN_STATUS
 
 
@@ -80,6 +82,19 @@ def write_csv(results: list[dict], output_path: str) -> None:
         writer.writerows(results)
 
 
+def write_live_xlsx(results: list[dict], output_path: str) -> None:
+    workbook = Workbook()
+    worksheet = workbook.active
+    worksheet.title = "live_usernames"
+    worksheet.append(["username"])
+
+    for item in results:
+        if item["status"] == LIVE_STATUS:
+            worksheet.append([item["username"]])
+
+    workbook.save(output_path)
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Kiem tra hang loat username Twitter/X bang DrissionPage."
@@ -99,6 +114,10 @@ def build_parser() -> argparse.ArgumentParser:
         "-o",
         "--output",
         help="Luu ket qua ra file CSV.",
+    )
+    parser.add_argument(
+        "--live-xlsx",
+        help="Luu danh sach username live ra file Excel .xlsx.",
     )
     parser.add_argument(
         "--show-browser",
@@ -136,6 +155,10 @@ def main() -> int:
     if args.output:
         write_csv(results, args.output)
         print(f"Da luu CSV: {args.output}")
+
+    if args.live_xlsx:
+        write_live_xlsx(results, args.live_xlsx)
+        print(f"Da luu file Excel live: {args.live_xlsx}")
 
     return 0
 
