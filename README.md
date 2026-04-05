@@ -1,39 +1,51 @@
 # Twitter/X Batch Checker
 
-Tool CLI de kiem tra hang loat username Twitter/X bang Python + DrissionPage.
+## Thong tin du an
 
-Trang thai dau ra:
+Twitter/X Batch Checker la tool CLI viet bang Python de kiem tra hang loat username Twitter/X.
+
+Tool se phan loai moi username thanh 4 nhom:
 
 - `live`
 - `suspended`
 - `die`
 - `unknown`
 
-## Yeu cau
+Muc dich cua project:
+
+- nhap nhieu username cung luc
+- kiem tra tung profile tu dong
+- in ket qua ra terminal
+- xuat toan bo ket qua ra CSV
+- xuat rieng danh sach username `live` ra file Excel `.xlsx`
+
+## Quy trinh huong dan su dung
+
+### 1. Yeu cau moi truong
 
 - Windows
 - Python 3.10+
 - Google Chrome hoac Chromium
 
-## Cai dat
+### 2. Cai dat
 
-Mo `CMD` hoac `PowerShell`, di chuyen vao thu muc project:
+Mo `CMD` hoac `PowerShell`, vao thu muc project:
 
 ```bash
 cd /d D:\X
 ```
 
-Cai thu vien:
+Cai dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Chuan bi file username
+### 3. Chuan bi file username
 
-Tao file `.txt`, moi dong 1 username.
+Tao file `.txt`, moi dong mot username.
 
-Vi du file `kiemtraX.txt`:
+Vi du:
 
 ```text
 LeoManda299953
@@ -47,100 +59,86 @@ Neu file nam tren Desktop:
 %USERPROFILE%\Desktop\kiemtraX.txt
 ```
 
-## Cach chay co ban
+### 4. Chay tool
 
-### 1. Kiem tra tu file text
+Kiem tra tu file:
 
 ```bash
-cd /d D:\X
 python cli_check.py -f "%USERPROFILE%\Desktop\kiemtraX.txt"
 ```
 
-Tool se:
-
-- doc tung username
-- mo profile X/Twitter
-- in tien do `Dang kiem tra x/y`
-- tra bang ket qua trong terminal
-
-### 2. Kiem tra username nhap truc tiep
+Kiem tra username nhap truc tiep:
 
 ```bash
 python cli_check.py -u jack openai elonmusk
 ```
 
-## Cac tuy chon output
+### 5. Xuat ket qua
 
-### 1. Luu toan bo ket qua ra CSV
+Luu toan bo ket qua ra CSV:
 
 ```bash
 python cli_check.py -f "%USERPROFILE%\Desktop\kiemtraX.txt" -o result.csv
 ```
 
-### 2. Luu rieng username `live` ra file Excel
+Luu rieng username `live` ra Excel:
 
 ```bash
 python cli_check.py -f "%USERPROFILE%\Desktop\kiemtraX.txt" --live-xlsx live_usernames.xlsx
 ```
 
-File Excel se co 1 sheet:
-
-- `live_usernames`
-
-Va 1 cot:
-
-- `username`
-
-### 3. Vua xuat CSV, vua xuat Excel `live`
+Xuat ca CSV va Excel:
 
 ```bash
 python cli_check.py -f "%USERPROFILE%\Desktop\kiemtraX.txt" -o result.csv --live-xlsx live_usernames.xlsx
 ```
 
-## Cac tuy chon khac
+### 6. Cac tuy chon bo sung
 
-### Mo browser de xem qua trinh
+Mo browser de xem qua trinh:
 
 ```bash
 python cli_check.py -f "%USERPROFILE%\Desktop\kiemtraX.txt" --show-browser
 ```
 
-### Tang timeout
-
-Mac dinh timeout la `100` giay cho moi profile.
-
-Neu muon tang timeout:
+Tang timeout:
 
 ```bash
 python cli_check.py -f "%USERPROFILE%\Desktop\kiemtraX.txt" --timeout 200
 ```
 
-## Cach doc ket qua
-
-Tool kiem tra theo logic:
+### 7. Cach doc ket qua
 
 - `live`: tim thay `@username`
 - `suspended`: tim thay `Account suspended`
 - `die`: tim thay `This account doesn't exist`
 - `unknown`: het timeout ma van khong xac nhan duoc 1 trong 3 truong hop tren
 
+## Cong nghe su dung
+
+- `Python`: ngon ngu chinh cua project
+- `DrissionPage`: dieu khien Chromium de mo va doc profile Twitter/X
+- `openpyxl`: tao file Excel `.xlsx` cho danh sach `live`
+- `csv`: xuat toan bo ket qua ra file CSV
+- `argparse`: nhan tham so dong lenh cho tool CLI
+
 ## Lenh mau day du
 
-### Chi kiem tra
+Chi kiem tra:
 
 ```bash
 cd /d D:\X
 python cli_check.py -f "%USERPROFILE%\Desktop\kiemtraX.txt"
 ```
 
-### Kiem tra va xuat Excel danh sach live
+Kiem tra va xuat Excel danh sach `live`:
 
 ```bash
 cd /d D:\X
 python cli_check.py -f "%USERPROFILE%\Desktop\kiemtraX.txt" --live-xlsx "%USERPROFILE%\Desktop\live_usernames.xlsx"
 ```
 
-### Kiem tra va xuat ca CSV + Excel
+Kiem tra va xuat ca CSV + Excel:
 
 ```bash
 cd /d D:\X
